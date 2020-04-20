@@ -1,0 +1,97 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="apple-touch-icon" href="icon.png">
+  <!-- Place favicon.ico in the root directory -->
+
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/main.css">
+
+  <meta name="theme-color" content="#fafafa">
+</head>
+
+<body>
+  <!--[if IE]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+  <![endif]-->
+
+  <!-- Add your site or application content here -->
+  <main>
+  <h1>Leaf Charge</h1>
+  <form>
+    <ul>
+      <li>
+        <label>Target</label>
+        <select id="Target">
+          <option>80%</option>
+          <option>100%</option>
+        </select>
+      </li>
+      <li>
+        <label>Current % Charge</label>
+        <input id="Current" type="text" />
+      </li>
+      <li><a id="Calc" href="javascript:void(0);">Calculate</a></li>
+    </ul>
+    <h3 id="Answer"></h3>
+  </main>
+  </form>
+  <script src="js/vendor/modernizr-3.7.1.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.4.1.min.js"><\/script>')</script>
+  <script src="js/plugins.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('#Calc').on('click', function(){
+        var target = $('#Target').val();
+        var current = $('#Current').val();
+        var time = new Date();
+        var diff;
+        var duration;
+        var chargetime;
+        var unplugtime = new Date();
+        unplugtime.setDate(new Date().getDate()+1);
+        unplugtime.setHours(08);
+        unplugtime.setMinutes(30);
+        var AMPM;
+        var answer;
+        var hour;
+        var minute;
+        if (target == '80%') {
+          diff = 80 - current;
+          duration = diff / 0.06;
+          chargetime = new Date(unplugtime - duration * 60000);
+          if (chargetime.getHours() >= 12) {
+            AMPM = ' PM';
+          }
+          else {
+            AMPM = ' AM';
+          }
+          hour = (chargetime.getHours() % 12) || 12;
+          minute = ('0' + chargetime.getMinutes()).slice(-2);
+          answer = 'Plug in at ' + hour + ":" + minute + AMPM;
+          $('#Answer').text(answer);
+        }
+        else if (target == '100%') {
+
+        }
+      });
+    });
+  </script>
+  <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
+  <script>
+    window.ga = function () { ga.q.push(arguments) }; ga.q = []; ga.l = +new Date;
+    ga('create', 'UA-XXXXX-Y', 'auto'); ga('set','transport','beacon'); ga('send', 'pageview')
+  </script>
+  <script src="https://www.google-analytics.com/analytics.js" async></script>
+</body>
+
+</html>
